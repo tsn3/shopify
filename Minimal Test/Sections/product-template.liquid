@@ -1,0 +1,225 @@
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <!-- Hero Area Start-->
+                <div class="slider-area ">
+                    <div class="single-slider slider-height2 d-flex align-items-center">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="hero-cap text-center">
+                                        <h2>{{ shop.name }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hero Area End-->
+                <!--================Single Product Area =================-->
+                <div class="product_image_area">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="product_img_slide owl-carousel">
+                                    {% for image in product.images %}
+                                        <div class="single_product_img">
+                                            <img src="{{ image.src | img_url: '600x600' }}" alt="{{ image.alt | escape }}" class="img-fluid">
+                                        </div>
+                                    {% else %}
+                                        <img src="{{ featured_image | img_url: '600x600'}}" alt="{{ featured_image.alt | escape }}">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="single_product_text text-center">
+                                    <h3>{{ product.title }}</h3>
+                                    <p>
+                                        {{ product.description }}
+                                    </p>
+                                    <div class="card_area">
+
+                                        {% form 'product', product, class: productform_class %}
+                                            {{ form | payment_terms }}
+                                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                                            <div class="product_count_area{% unless section.settings.product_quantity_enable %} is-hidden{% endunless %}">
+                                                <p>{{ 'products.product.quantity' | t }}</p>
+                                                <div class="product_count d-inline-block">
+                                                    <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
+                                                    <input class="product_count_item input-number" type="text" value="1" min="0" max="10" id="Quantity" name="quantity">
+                                                    <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
+                                                </div>
+                                                <p>{{ product.price | money }}</p>
+                                            </div>
+
+                                            <button type="submit" name="add" id="AddToCart" class="add_to_cart">
+                                                <span id="AddToCartText" class="btn_3">{{ 'products.product.add_to_cart' | t }}</span>
+                                            </button>
+                                        {% endform %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+{% unless product == empty %}
+    <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+{% schema %}
+{
+"name": {
+"en": "Product pages"
+},
+"settings": [
+{
+"type": "checkbox",
+"id": "product_vendor_enable",
+"label": {
+"en": "Show product vendor"
+}
+},
+{
+"type": "checkbox",
+"id": "product_quantity_enable",
+"label": {
+
+"en": "Show quantity selector"
+}
+},
+{
+"type": "select",
+"id": "product_image_zoom_type",
+"label": {
+"en": "Image zoom type"
+},
+"options": [
+{
+"value": "lightbox",
+"label": {
+"en": "Lightbox"
+}
+},
+{
+"value": "zoom-in",
+"label": {
+"en": "Zoom-in"
+}
+},
+{
+"value": "no-zoom",
+"label": {
+"en": "No zoom"
+}
+}
+]
+},
+{
+"type": "select",
+"id": "product_thumbnails_position",
+"label": {
+"en": "Product thumbnail position"
+},
+"options": [
+{
+"value": "right",
+"label": {
+"en": "Right of main image"
+}
+},
+{
+"value": "below",
+"label": {
+"en": "Below main image"
+}
+}
+]
+},
+{
+"type": "header",
+"content": {
+"en": "Description"
+}
+},
+{
+"type": "checkbox",
+"id": "show_extra_tab",
+"label": {
+"en": "Show a tab next to your product description"
+},
+"default": false
+},
+{
+"type": "page",
+"id": "extra_tab_content",
+"label": {
+"en": "Tab content"
+},
+"info": {
+"en": "This page content will appear in the extra tab."
+}
+},
+{
+"type": "checkbox",
+"id": "social_sharing",
+"label": {
+"en": "Enable product sharing"
+}
+},
+{
+"type": "header",
+"content": {
+"en": "Product options form"
+}
+},
+{
+"type": "checkbox",
+"id": "enable_payment_button",
+"label": {
+"en": "Show dynamic checkout button"
+},
+"info": {
+"en": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+},
+"default": true
+},
+{
+"type": "select",
+"id": "add_to_cart_width",
+"label": {
+"en": "Variant picker and button size"
+},
+"options": [
+{
+"value": "small",
+"label": {
+"en": "Small"
+}
+},
+{
+"value": "medium",
+"label": {
+"en": "Medium"
+}
+},
+{
+"value": "large",
+"label": {
+"en": "Large"
+}
+}
+]
+}
+]
+}
+{% endschema %}

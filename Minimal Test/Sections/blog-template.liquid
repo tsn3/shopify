@@ -1,0 +1,76 @@
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{% endif %}
+{% paginate blog.articles by 2 %}
+
+    <!--================Blog Area =================-->
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        {% for article in blog.articles %}
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="{{ article.image | img_url: '300x300' }}" alt="{{ image_alt }}">
+                                    <a href="#" class="blog_item_date">
+                                        <h3>{{ article.published_at | date: '%d' }}</h3>
+                                        <p>{{ article.published_at | date: '%b' }}</p>
+                                    </a>
+                                </div>
+                                <div class="blog_details">
+                                    <h2><a class="d-inline-block" href="{{ article.url }}">{{ article.title }}</a></h2>
+                                    <p>
+                                        {% if article.excerpt.size > 0 %}
+                                            {{ article.excerpt }}
+                                        {% else %}
+                                    <p>{{ article.content | strip_html | truncatewords: 30 }}</p>
+                                    {% endif %}
+                                    </p>
+                                    <ul class="blog-info-link">
+                                        {% if section.settings.blog_author_enable %}
+                                            <li><a href="{{ author.url }}"><i class="fa fa-user"></i>{{ article.author }}</a></li>
+                                        {% endif %}
+                                        {% if blog.comments_enabled? and article.comments_count > 0 %}
+                                            <li><a href="{{ article.url }}"><i class="fa fa-comments"></i>{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        {% if paginate.pages > 1 %}
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                {% include 'pagination-custom' %}
+                            </nav>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% include 'blog-sidebar-test' %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+{% endpaginate %}
+
+
+
+{% schema %}
+{
+"name": {
+"en": "Blog"
+},
+"settings": [
+{
+"type": "checkbox",
+"id": "blog_author_enable",
+"label": {
+"en": "Show blog post author"
+}
+}
+]
+}
+{% endschema %}

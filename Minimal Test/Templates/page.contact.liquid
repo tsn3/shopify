@@ -1,0 +1,54 @@
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">{{ 'contact.form.get_in_touch' | t }}</h2>
+            </div>
+            <div class="col-lg-8">
+                {% form 'contact' %}
+                    {% if form.posted_successfully? %}
+                        <p class="note form-success">
+                            {{ 'contact.form.post_success' | t }}
+                        </p>
+                    {% endif %}
+                    {{ form.errors | default_errors }}
+                    <form class="form-contact contact_form" action="contact_process.php" method="post"
+                          id="contactForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                      <textarea class="form-control w-100" name="contact[{{ 'contact.form.message' | t }}]" id="ContactFormMessage" cols="30" rows="9"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ 'contact.form.message' | t }}'" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control valid" name="contact[{{ 'contact.form.name' | t }}]" id="ContactFormName" type="text"
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ 'contact.form.name' | t }}'" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control valid" name="contact[email]" id="ContactFormEmail" type="email"
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ 'contact.form.email' | t }}'" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input class="form-control" name="contact[{{ 'contact.form.subject' | t }}]" id="ContactFormSubject" type="text"
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = '{{ 'contact.form.subject' | t }}'" placeholder="{{ 'contact.form.subject' | t }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm boxed-btn">{{ 'contact.form.send' | t }}</button>
+                        </div>
+                    </form>
+                {% endform %}
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                {% section 'contact-fields' %}
+            </div>
+        </div>
+    </div>
+</section>

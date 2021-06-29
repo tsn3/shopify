@@ -1,0 +1,164 @@
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="{{ "logo.png" | asset_url }}" alt="{{ shop.name }}">
+            </div>
+        </div>
+    </div>
+</div>
+<header>
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header header-sticky">
+            <div class="container-fluid">
+                <div class="menu-wrapper">
+                    <!-- Logo -->
+                    {% if section.settings.logo != blank %}
+
+                        <div class="logo">
+                            <a href="/" itemprop="url">
+                                <img src="{{ "logo.png" | asset_url }}"
+                                     alt="{{ shop.name }}"
+                                     itemprop="logo">
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
+                    {% endif %}
+
+                    <!-- Main-menu -->
+                    <div class="main-menu d-none d-lg-block">
+                        {% include 'site-nav' with linklists[section.settings.nav_menu] %}
+                    </div>
+                    <!-- Header Right -->
+                    <div class="header-right">
+                        <ul>
+                            <li>
+                                <div class="nav-search search-switch">
+                                    <span class="fi-creative-search"></span>
+                                </div>
+                            </li>
+                            <li> <a href="{{ routes.account_url }}"><span class="fi-creative-user"></span></a></li>
+                            <li><a href="{{ routes.cart_url }}">{% unless cart.item_count == 0 %}:{% endunless %}<span class="fi-creative-shopping-bag{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span></a> </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="col-12">
+                    <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+
+
+{% schema %}
+{
+"name": {
+"en": "Header"
+},
+"settings": [
+{
+"type": "checkbox",
+"id": "header_search_enable",
+"label": {
+"en": "Show search bar"
+}
+},
+{
+"type": "image_picker",
+"id": "logo",
+"label": {
+"en": "Logo"
+},
+"info": {
+"en": "450 x 200px recommended"
+}
+},
+{
+"type": "text",
+"id": "logo_max_width",
+"label": {
+"en": "Custom logo width (in pixels)"
+},
+"default": {
+"en": "450"
+}
+},
+{
+"type": "header",
+"content": {
+"en": "Main menu"
+}
+},
+{
+"type": "link_list",
+"id": "nav_menu",
+"label": {
+"en": "Menu"
+},
+"default": "main-menu"
+},
+{
+"type": "checkbox",
+"id": "nav_below_logo",
+"label": {
+"en": "Center main menu below logo"
+}
+},
+{
+"type": "checkbox",
+"id": "left_aligned_logo",
+"label": {
+"en": "Left-align logo"
+}
+},
+{
+"type": "checkbox",
+"id": "show_header_lines",
+"label": {
+"en": "Show divider lines in header"
+}
+},
+{
+"type": "header",
+"content": {
+"en": "Announcement bar"
+}
+},
+{
+"type": "checkbox",
+"id": "show_announcement",
+"label": {
+"en": "Show announcement"
+},
+"default": true
+},
+{
+"type": "text",
+"id": "header_text",
+"label": {
+"en": "Text"
+},
+"default": {
+"en": "Announce something here"
+}
+},
+{
+"type": "url",
+"id": "announcement_link",
+"label": {
+"en": "Link"
+},
+"info": {
+"en": "Optional"
+}
+}
+]
+}
+{% endschema %}

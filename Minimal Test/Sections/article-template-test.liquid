@@ -1,0 +1,232 @@
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{% endif %}
+
+{% paginate article.comments by 15 %}
+    <!--================Blog Area =================-->
+    <section class="blog_area single-post-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post">
+                        <div class="feature-img">
+                            <img class="img-fluid" src="{{ article.image | img_url: '600x600' }}" alt="{{ image_alt }}">
+                        </div>
+                        <div class="blog_details">
+                            <h2>
+                                {{ article.title }}
+                            </h2>
+                            <ul class="blog-info-link mt-3 mb-4">
+                                <li><a href="#"><i class="fa fa-user"></i>{{ article.author }}</a></li>
+                                <li><a href="#"><i class="fa fa-comments"></i>{{ 'blogs.comments.with_count' | t: count: number_of_comments }}</a></li>
+                            </ul>
+                            <p>
+                                {{ article.content }}
+                            </p>
+                            {% if article.excerpt.size > 0 %}
+                                <div class="quote-wrapper">
+                                    <div class="quotes">
+                                        {{ article.excerpt }}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="quote-wrapper">
+                                    <div class="quotes">
+                                        {{ article.content | strip_html | truncatewords: 30 }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="navigation-top">
+                        <div class="d-sm-flex justify-content-between text-center">
+                            <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
+                                people like this</p>
+                            <div class="col-sm-4 text-center my-2 my-sm-0">
+                                <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
+                            </div>
+                            <ul class="social-icons">
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+
+                        {% comment %}
+                        Create links to the next and previous articles, if available.
+                        {% endcomment %}
+                        {% if blog.next_article or blog.previous_article %}
+
+                            <div class="navigation-area">
+                                <div class="row">
+                                    {% if blog.previous_article %}
+                                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                                            <div class="thumb">
+                                                <a href="{{blog.previous_article.url}}">
+                                                    <img class="img-fluid" src="{{blog.previous_article.image | img_url: '200x200' }}" alt="{{ image_alt }}">
+                                                </a>
+                                            </div>
+                                            <div class="arrow">
+                                                <a href="{{blog.previous_article.url}}">
+                                                    <span class="lnr text-white ti-arrow-left"></span>
+                                                </a>
+                                            </div>
+                                            <div class="detials">
+                                                <p>{{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}</p>
+                                                <a href="{{blog.previous_article.url}}">
+                                                    <h4>{{blog.previous_article.title}}</h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if blog.next_article %}
+                                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                            <div class="detials">
+                                                <p>{{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}</p>
+                                                <a href="{{ blog.next_article.url }}">
+                                                    <h4>{{blog.next_article.title}}</h4>
+                                                </a>
+                                            </div>
+                                            <div class="arrow">
+                                                <a href="{{ blog.next_article.url }}"><span class="lnr text-white ti-arrow-right"></span>
+                                                </a>
+                                            </div>
+                                            <div class="thumb">
+                                                <a href="{{ blog.next_article.url }}">
+                                                    <img class="img-fluid" src="{{ blog.next_article.image | img_url: '200x200' }}" alt="{{ image_alt }}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="blog-author">
+                        <div class="media align-items-center">
+                            <img src="{{ "author.png" | asset_url  }}" alt="{{ article.author }}">
+                            <div class="media-body">
+                                <a href="#">
+                                    <h4>{{ article.author }}</h4>
+                                </a>
+                                <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
+                                    our dominion twon Second divided from</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {%- assign new_comment = false -%}
+                    {%- if comment and comment.created_at -%}
+                        {%- assign new_comment = true -%}
+                        {%- assign new_comment_id = comment.id -%}
+                    {%- endif -%}
+
+                    {%- if new_comment -%}
+                        {%- assign duplicate_comment = false -%}
+                        {%- for comment in article.comments -%}
+                            {%- if comment.id == new_comment_id -%}
+                                {%- assign duplicate_comment = true -%}
+                                {% break %}
+                            {%- endif -%}
+                        {%- endfor -%}
+
+                        {%- if duplicate_comment -%}
+                            {%- assign number_of_comments = article.comments_count -%}
+                        {%- else -%}
+                            {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+                        {%- endif -%}
+                    {%- else -%}
+                        {%- assign number_of_comments = article.comments_count -%}
+                    {%- endif -%}
+
+                    <!-- Code to output article content can be added here. -->
+
+                    {%- if blog.comments_enabled? -%}
+                        {%- if number_of_comments > 0 -%}
+
+                            <div class="comments-area">
+                                <h4>{{ 'blogs.comments.with_count' | t: count: number_of_comments }}</h4>
+                                {% comment %}
+                                If a comment was just submitted with no blank field, show it.
+                                {% endcomment %}
+                                {%- if new_comment -%}
+
+                                    {% if comment and comment.created_at %}
+                                        <div id="{{ comment.id }}" class="comment first{% if article.comments_count == 0 %} last{% endif %}">
+                                            {% include 'comment' %}
+                                        </div>
+                                    {% endif %}
+                                {%- endif -%}
+
+
+                                {% comment %}
+                                Showing the rest of the comments.
+                                {% endcomment %}
+                                {% for comment in article.comments %}
+                                    {% unless comment.id == new_comment_id %}
+
+                                        <div id="{{ comment.id }}" class="comment{% unless number_of_comments > article.comments_count %}{% if forloop.first %} first{% endif %}{% endunless %}{% if forloop.last %} last {% endif %}">
+                                            {% include 'comment' %}
+                                        </div>
+                                    {% endunless %}
+
+                                {% endfor %}
+                            </div>
+                            {% if paginate.pages > 1 %}
+                                <nav class="blog-pagination justify-content-center d-flex">
+                                    {% include 'pagination-custom' %}
+                                </nav>
+                            {%- endif -%}
+
+                        {% endif %}
+                    {% endif %}
+
+
+                    {% comment %}
+                    Comment submission form
+                    {% endcomment %}
+                    <div class="comment-form">
+                        {% include 'comment-form' %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% include 'blog-sidebar-test' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endpaginate %}
+
+
+<!--================Blog Area =================-->
+
+{% schema %}
+{
+"name": {
+"en": "Article"
+},
+"settings": [
+{
+"type": "checkbox",
+"id": "article_author_enable",
+"label": {
+"en": "Show blog post author"
+
+}
+},
+{
+"type": "checkbox",
+"id": "social_sharing",
+"label": {
+"en": "Enable blog post sharing"
+}
+}
+]
+}
+{% endschema %}

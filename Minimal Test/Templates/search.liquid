@@ -1,0 +1,108 @@
+{% assign grid_results = false %}
+
+{% if search.performed %}
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    {% if search.performed %}
+                        {% if search.results_count == 0 %}
+                            <div class="blog_left_sidebar">{{ 'general.search.no_results_html' | t: terms: search.terms }}</div>
+                        {% else %}
+                            <div class="blog_left_sidebar">{{ 'general.search.results_for_html' | t: terms: search.terms }}
+                                {% for item in search.results %}
+                                    <article class="blog_item">
+
+                                        {% if item.object_type == 'product' %}
+                                            {% comment %} If we have a product {% endcomment %}
+                                            {% if item.type != '' %}
+                                                {% assign product = item %}
+                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                                    <div class="single-popular-items mb-50 text-center">
+                                                        <form method="post" action="/cart/add">
+                                                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                                                            {% for image in product.images %}
+                                                                <div class="popular-img">
+                                                                    <img src="{{ image.src | img_url: '600x600' }}" alt="{{ image.alt | escape }}">
+                                                                    <div class="img-cap">
+                                                                        <input type="submit" value="{{ 'products.product.add_to_cart' | t }}" class="btn" />
+                                                                    </div>
+                                                                    <div class="favorit-items">
+                                                                        <span class="flaticon-heart"></span>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </form>
+                                                        <div class="popular-caption">
+                                                            <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                                                            <span>{{ product.price | money }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        {% endif %}
+                                        <!--             End results for products -->
+                                        {% if item.object_type == 'article' %}
+                                            <div class="blog_item_img">
+                                                <img id="{{ img_id }}"
+                                                     class="card-img rounded-0" src="{{ item.image | img_url: '300x300' }}" alt="">
+                                                <a href="#" class="blog_item_date">
+                                                    <h3>{{ item.published_at | date: '%d' }}</h3>
+                                                    <p>{{ item.published_at | date: '%b' }}</p>
+                                                </a>
+                                            </div>
+                                            <div class="blog_details">
+                                                <h2><a class="d-inline-block" href="{{ item.url }}">{{ item.title }}</a></h2>
+                                                {% if item.excerpt.size > 0 %}
+                                                    {{ item.excerpt }}
+                                                {% else %}
+                                                    <p>{{ item.content | strip_html | truncatewords: 30 }}</p>
+                                                {% endif %}
+
+
+                                                {%- assign new_comment = false -%}
+                                                {%- if comment and comment.created_at -%}
+                                                    {%- assign new_comment = true -%}
+                                                    {%- assign new_comment_id = comment.id -%}
+                                                {%- endif -%}
+
+                                                {%- if new_comment -%}
+                                                    {%- assign duplicate_comment = false -%}
+                                                    {%- for comment in article.comments -%}
+                                                        {%- if comment.id == new_comment_id -%}
+                                                            {%- assign duplicate_comment = true -%}
+                                                            {% break %}
+                                                        {%- endif -%}
+                                                    {%- endfor -%}
+
+                                                    {%- if duplicate_comment -%}
+                                                        {%- assign number_of_comments = article.comments_count -%}
+                                                    {%- else -%}
+                                                        {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+                                                    {%- endif -%}
+                                                {%- else -%}
+                                                    {%- assign number_of_comments = article.comments_count -%}
+                                                {%- endif -%}
+                                                <ul class="blog-info-link">
+                                                    <li><a href="#"><i class="fa fa-user"></i>{{ item.author }}</a></li>
+                                                    <li><a href="#"><i class="fa fa-comments"></i>{{ 'blogs.comments.with_count' | t: count: item.comments_count }}</a></li>
+
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                        <!--             End results for products -->
+
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-lg-4">
+                    {% include 'blog-sidebar-test' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

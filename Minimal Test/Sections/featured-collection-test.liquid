@@ -1,0 +1,151 @@
+{% assign featured = section.settings.featured_collection %}
+{% assign products_per_row = section.settings.num_per_row %}
+{% assign rows = section.settings.num_rows %}
+{% assign total_products = products_per_row | times: rows %}
+
+<div data-section-id="{{ section.id }}" data-section-type="featured-products-section">
+    <section class="popular-items latest-padding">
+        <div class="container">
+            {% case products_per_row %}
+                {% when 3 %}
+                    {% assign grid_item_width = 'medium--one-third post-large--one-third' %}
+                    {%- assign product_width = 410 -%}
+                {% when 4 %}
+                    {% assign grid_item_width = 'medium-down--one-half post-large--one-quarter' %}
+                    {%- assign product_width = 335 -%}
+                {% when 5 %}
+                    {% assign grid_item_width = 'medium-down--one-half post-large--one-fifth' %}
+                    {%- assign product_width = 335 -%}
+            {% endcase %}
+
+            {% if section.settings.show_title_items %}
+                {% unless section.settings.title == blank %}
+                    <div class="row justify-content-center">
+                        <div class="col-xl-7 col-lg-8 col-md-10">
+                            <div class="section-tittle mb-70 text-center">
+                                <h2>{{ section.settings.title | escape }}</h2>
+                                {% unless section.settings.description == blank %}
+                                    <p>{{ section.settings.description | escape }}</p>
+                                {% endunless %}
+                            </div>
+                        </div>
+                    </div>
+                {% endunless %}
+            {% endif %}
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
+                        {% for product in collections[featured].products limit: total_products %}
+                            {% assign featured = product %}
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                <div class="single-popular-items mb-50 text-center">
+                                    {% include 'product-grid-item' %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% if section.settings.show_view_all %}
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-70">
+                        <a href="{{ routes.all_products_collection_url }}" class="btn view-btn1">{{ 'blogs.article.view_all' | t }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+
+
+
+{% schema %}
+{
+"name": {
+"en": "Featured collection test"
+},
+"class": "index-section",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Title here"
+}
+},
+{
+"type": "text",
+"id": "description",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Description here"
+}
+},
+{
+"type": "checkbox",
+"id": "show_title_items",
+"label": {
+"en": "Show title and description items"
+},
+"default": true
+},
+{
+"type": "collection",
+"id": "featured_collection",
+"label": {
+"en": "Collection"
+}
+},
+{
+"type": "range",
+"id": "num_per_row",
+"label": {
+"en": "Products per row"
+},
+"min": 3,
+"max": 5,
+"step": 1,
+"default": 3
+},
+{
+"type": "range",
+"id": "num_rows",
+"label": {
+"en": "Rows"
+},
+"min": 1,
+"max": 6,
+"step": 1,
+"default": 1
+},
+{
+"type": "checkbox",
+"id": "show_view_all",
+"label": {
+"en": "Show 'View all' button"
+},
+"default": true
+}
+],
+"presets": [
+{
+"name": {
+"en": "Featured collection test"
+},
+"category": {
+"en": "Collection"
+},
+"settings": {
+"title": "Featured collection test",
+"featured_collection": "frontpage"
+}
+}
+]
+}
+{% endschema %}

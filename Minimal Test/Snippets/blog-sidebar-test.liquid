@@ -1,0 +1,70 @@
+<div class="blog_right_sidebar">
+    <aside class="single_sidebar_widget search_widget">
+        <form action="/search" method="get">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="q" placeholder='{{ 'general.search.placeholder' | t }}'
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '{{ 'general.search.placeholder' | t }}'">
+                    <div class="input-group-append">
+                        <button class="btns" type="button"><i class="ti-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                    type="submit">{{ 'general.search.submit' | t }}</button>
+        </form>
+    </aside>
+
+    {% if blog.all_tags.size > 0 %}
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">{{ 'blogs.sidebar.category' | t }}</h4>
+            <ul class="list cat-list">
+                {% for tag in blog.all_tags %}
+                    {% if current_tags contains tag %}
+                        <li>
+                            <a href="#" class="d-flex">
+                                <p>{{ tag | link_to_tag: tag }} ({{ tag.total_count }})</p>
+                                <p></p>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="#" class="d-flex">
+                                <p>{{ tag | link_to_tag: tag }} ({{ tag.total_count }})</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
+
+
+    <aside class="single_sidebar_widget popular_post_widget">
+        <h3 class="widget_title">{{ 'blogs.sidebar.recent_post' | t }}</h3>
+        {% for article in blogs.news.articles limit: 10 %}
+            <div class="media post_item">
+                <img src="{{ article.image | img_url: '80x80' }}" alt="post">
+                <div class="media-body">
+                    <a href="{{ article.url }}">
+                        <h3>{{ article.title }}</h3>
+                    </a>
+                    <p>{{ article.published_at | date: format: 'date' }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </aside>
+
+    <aside class="single_sidebar_widget tag_cloud_widget">
+        <h4 class="widget_title">{{ 'blogs.sidebar.tag_clouds' | t }}</h4>
+        <ul class="list">
+            {% for tag in blog.all_tags %}
+                <li>
+                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+</div>

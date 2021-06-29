@@ -1,0 +1,77 @@
+<div class="media contact-info">
+    <span class="contact-info__icon"><i class="ti-home"></i></span>
+    <div class="media-body">
+        <h3>{{ section.settings.contact_city }}</h3>
+        <p>{{ section.settings.contact_index }}</p>
+    </div>
+</div>
+<div class="media contact-info">
+    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+    <div class="media-body">
+        <h3>{{ section.settings.contact_phone }}</h3>
+        <p>{{ section.settings.contact_working_hours }}</p>
+    </div>
+</div>
+<div class="media contact-info">
+    <span class="contact-info__icon"><i class="ti-email"></i></span>
+    <div class="media-body">
+        <h3>{{ section.settings.contact_email }}</h3>
+        <p>{{ section.settings.contact_slogan }}</p>
+    </div>
+</div>
+
+
+{% schema %}
+{
+"name": "Contact fields",
+"class": "index-section",
+"settings": [
+{
+"id": "contact_city",
+"type": "text",
+"label": "post_city",
+"default": "Buttonwood, California."
+},
+{
+"id": "contact_index",
+"type": "text",
+"label": "Post index",
+"default": "Rosemead, CA 91770"
+},
+{
+"id": "contact_phone",
+"type": "text",
+"default": "+1 253 565 2365",
+"label": "phone"
+},
+{
+"id": "contact_working_hours",
+"type": "text",
+"label": "Description",
+"default": "Mon to Fri 9am to 6pm"
+}, 	{
+"id": "contact_email",
+"type": "text",
+"label": "Email",
+"default": "support@colorlib.com"
+},
+{
+"id": "contact_slogan",
+"type": "text",
+"label": "Slogan",
+"default": "Send us your query anytime!"
+}
+],
+"presets": [
+{
+"name": {
+"en": "Contact fields"
+},
+"category": {
+"en": "Text"
+}
+}
+]
+
+}
+{% endschema %}

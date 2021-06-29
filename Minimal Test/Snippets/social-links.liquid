@@ -1,0 +1,11 @@
+<!-- social -->
+<div class="footer-social">
+    {%- if settings.social_twitter_link != blank -%}
+        <a href="{{ settings.social_twitter_link | escape }}"><i class="fab fa-twitter"></i></a>
+    {%- endif -%}
+    {%- if settings.social_facebook_link != blank -%}
+        <a href="{{ settings.social_facebook_link | escape }}"><i class="fab fa-facebook-f"></i></a>
+    {%- endif -%}
+    <a href="#"><i class="fab fa-behance"></i></a>
+    <a href="#"><i class="fas fa-globe"></i></a>
+</div>

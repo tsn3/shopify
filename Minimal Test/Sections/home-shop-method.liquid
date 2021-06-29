@@ -1,0 +1,90 @@
+<div class="shop-method-area">
+    <div class="container">
+        <div class="method-wrapper">
+            <div class="row d-flex justify-content-between">
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-method mb-40">
+                        <i class="ti-package"></i>
+                        <h6>{{ section.settings.title_shipping }}</h6>
+                        <p>{{ section.settings.description_first }}</p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-method mb-40">
+                        <i class="ti-unlock"></i>
+                        <h6>{{ section.settings.title_second }}</h6>
+                        <p>{{ section.settings.description_second }}</p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-method mb-40">
+                        <i class="ti-reload"></i>
+                        <h6>{{ section.settings.title_third }}</h6>
+                        <p>{{ section.settings.description_third }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+"name": "Home shop method",
+"settings": [
+{
+"id": "title_shipping",
+"type": "text",
+"label": "Shipping Method",
+"default": "Add Shipping Method"
+},
+{
+"id": "description_first",
+"type": "text",
+"label": "Description Shipping Method",
+"default": "Add description"
+},
+{
+"id": "title_second",
+"type": "text",
+"label": "Payment Systemd",
+"default": "Add Payment System"
+},
+{
+"id": "description_second",
+"type": "text",
+"label": "Description Payment System",
+"default": "Add description"
+},
+{
+"id": "title_third",
+"type": "text",
+"label": "Payment System",
+"default": "Add Payment System"
+},
+{
+"id": "description_third",
+"type": "text",
+"label": "Description Payment System",
+"default": "Add description"
+}
+],
+"presets": [
+{
+"name": {
+"en": "Home shop method"
+},
+"category": {
+"en": "Text"
+}
+}
+]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

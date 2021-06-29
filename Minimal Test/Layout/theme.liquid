@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+
+    <!-- Basic page needs ================================================== -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    {% if settings.favicon %}
+        <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+    {% endif %}
+
+    <!-- Title and description ================================================== -->
+    <title>
+        {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <!-- Social meta ================================================== -->
+    {% include 'social-meta-tags' %}
+
+    <!-- Helpers ================================================== -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+
+    <!-- CSS ================================================== -->
+    {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+    {{ 'owl.carousel.min.css' | asset_url | stylesheet_tag }}
+    {{ 'slicknav.css' | asset_url | stylesheet_tag }}
+    {{ 'animate.min.css' | asset_url | stylesheet_tag }}
+    {{ 'magnific-popup.css' | asset_url | stylesheet_tag }}
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+    {{ 'nice-select.css' | asset_url | stylesheet_tag }}
+    {{ 'style.css' | asset_url | stylesheet_tag }}
+
+    <!--   slider here first -->
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+    {{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flat-icons@1.0.0/creative.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% render 'css-variables' %}
+
+
+    <!-- Header hook for plugins ================================================== -->
+    {{ content_for_header }}
+
+
+</head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ request.page_type | handle }}">
+
+{% section 'header' %}
+
+<main>
+    {{ content_for_layout }}
+</main>
+
+{% section 'footer' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{ 'modernizr-3.5.0.min.js' | asset_url | script_tag }}
+{{ 'popper.min.js' | asset_url | script_tag }}
+{{ 'bootstrap.min.js' | asset_url | script_tag }}
+{{ 'jquery.slicknav.min.js' | asset_url | script_tag }}
+{{ 'owl.carousel.min.js' | asset_url | script_tag }}
+{{ 'slick.min.js' | asset_url | script_tag }}
+{{ 'wow.min.js' | asset_url | script_tag }}
+{{ 'animated.headline.js' | asset_url | script_tag }}
+{{ 'jquery.magnific-popup.js' | asset_url | script_tag }}
+{{ 'jquery.scrollUp.min.js' | asset_url | script_tag }}
+{{ 'jquery.nice-select.min.js' | asset_url | script_tag }}
+{{ 'jquery.sticky.js' | asset_url | script_tag }}
+{{ 'jquery.form.js' | asset_url | script_tag }}
+{{ 'jquery.validate.min.js' | asset_url | script_tag }}
+{{ 'mail-script.js' | asset_url | script_tag }}
+{{ 'jquery.ajaxchimp.min.js' | asset_url | script_tag }}
+{{ 'plugins.js' | asset_url | script_tag }}
+{{ 'main.js' | asset_url | script_tag }}
+<!--   slider here -->
+<!--     {{ 'slick.min.js' | asset_url | script_tag }} -->
+{{ 'custom-theme.js' | asset_url | script_tag }}
+</body>
+</html>

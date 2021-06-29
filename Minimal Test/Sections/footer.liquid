@@ -1,0 +1,208 @@
+<footer>
+    <div class="footer-area footer-padding">
+        <div class="container">
+            <div class="row d-flex justify-content-between">
+
+                {% if settings.social_twitter_link != blank or settings.social_facebook_link != blank %}
+                    {% assign show_social_icons = true %}
+                {% else %}
+                    {% assign show_social_icons = false %}
+                {% endif %}
+                <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                    <div class="single-footer-caption mb-50">
+                        <div class="single-footer-caption mb-30">
+                            <!-- Logo -->
+                            {% if section.settings.logo != blank %}
+                                <div class="footer-logo">
+                                    <a href="/" itemprop="url">
+                                        <img src="{{ "logo.png" | asset_url }}"
+                                             alt="{{ shop.name }}"
+                                             itemprop="logo">
+                                    </a>
+                                </div>
+                            {% else %}
+                                <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
+                            {% endif %}
+                            <div class="footer-tittle">
+                                <div class="footer-pera">
+                                    <p>{{ block.settings.text}}Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'menu' %}
+                            <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                                <div class="single-footer-caption mb-50">
+                                    <div class="footer-tittle">
+                                        {% unless num_columns == 1 %}
+                                            <h3 class="h4">{{ block.settings.menu.title }}</h3>
+                                        {% endunless %}
+                                        <ul>
+                                            {% for link in linklists[block.settings.menu].links %}
+                                                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endcase %}
+                {% endfor %}
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-xl-7 col-lg-8 col-md-7">
+                    <div class="footer-copy-right">
+                        <p>{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: '%Y' }} {{ 'layout.footer.rights_reserved' | t }} | {{ 'layout.footer.this_template' | t }}
+                            <i class="fa fa-heart" aria-hidden="true"></i> {{ 'layout.footer.by' | t }} <a href="{{ routes.root_url }}" target="_blank">{{ 'layout.footer.tsn' | t }}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-4 col-md-5">
+                    <div class="footer-copy-right f-right">
+                        {% include 'social-links' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% include 'search-model' %}
+
+
+
+
+{% schema %}
+{
+"name": {
+"en": "Footer"
+},
+"max_blocks": 9,
+"settings": [
+
+
+{
+"type": "checkbox",
+"id": "show_methods_of_payment",
+"label": {
+"en": "Payment icons"
+}
+},
+{
+"type": "image_picker",
+"id": "logo",
+"label": {
+"en": "Logo"
+},
+"info": {
+"en": "450 x 200px recommended"
+}
+}
+],
+"blocks": [
+{
+"type": "menu",
+"name": {
+"en": "Menu"
+},
+"settings": [
+{
+"type": "text",
+"id": "menu_title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Links"
+}
+},
+{
+"type": "link_list",
+"id": "menu",
+"label": {
+"en": "Menu"
+}
+}
+]
+},
+{
+"type": "text",
+"name": {
+"en": "Text"
+},
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Contact us"
+}
+},
+{
+"type": "richtext",
+"id": "richtext",
+"label": {
+"en": "Text"
+}
+}
+]
+},
+{
+"type": "blog",
+"name": {
+"en": "Latest blog post"
+},
+"settings": [
+{
+"type": "blog",
+"id": "blog",
+"label": {
+"en": "Blog"
+}
+}
+]
+},
+{
+"type": "social",
+"name": {
+"en": "Social icons"
+},
+"limit": 1,
+"settings": [
+{
+"type": "paragraph",
+"content": {
+"en": "Edit your social settings and accounts in theme settings"
+}
+}
+]
+},
+{
+"type": "newsletter",
+"name": {
+"en": "Newsletter signup"
+},
+"limit": 1,
+"settings": [
+{
+"type": "richtext",
+"id": "subtext",
+"label": {
+"en": "Subtext"
+},
+"default": {
+"en": "<p>Sign up for the latest news, offers and styles</p>"
+}
+}
+]
+}
+]
+}
+{% endschema %}

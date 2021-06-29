@@ -1,0 +1,62 @@
+{% comment %}
+
+  This snippet gives you a grid layout for each search result.
+
+  It is encouraged to only use this approach for product results,
+  as page results don't look great in a grid without a featured image.
+
+  To use this grid layout, change the grid_results variable
+  in search.liquid to true.
+
+{% endcomment %}
+
+{% comment %}
+  Set the default grid_item_width if no variable is set
+{% endcomment %}
+{% unless grid_item_width %}
+    {% assign grid_item_width = 'wide--one-quarter large--one-third medium--one-half' %}
+{% endunless %}
+
+
+
+{% if search.performed %}
+    {% if search.results_count == 0 %}
+        <div class="blog_item">Ваш запрос <span >"{{ search.terms }}"</span> не дал никаких результатов.</div>
+    {% else %}
+
+        {% for item in search.results %}
+            <div class="blog_left_sidebar">
+                {% for article in blog.articles %}
+                    <article class="blog_item">
+                        <div class="blog_item_img">
+                            <img class="card-img rounded-0" src="{{ article.image }}" alt="">
+                            <a href="#" class="blog_item_date">
+                                <h3>{{ article.published_at | date: '%d' }}</h3>
+                                <p>{{ article.published_at | date: '%b' }}</p>
+                            </a>
+                        </div>
+                        <div class="blog_details">
+                            <h2><a class="d-inline-block" href="{{ article.url }}">{{ article.title }}</a></h2>
+                            <p>
+                                {% if article.excerpt.size > 0 %}
+                                    {{ article.excerpt }}
+                                {% else %}
+                            <p>{{ article.content}}</p>
+                            {% endif %}
+                            </p>
+                            <ul class="blog-info-link">
+                                <li><a href="#"><i class="fa fa-user"></i>{{ article.author }}</a></li>
+                                <li><a href="#"><i class="fa fa-comments"></i>search-result-grid</a></li>
+                            </ul>
+                        </div>
+                    </article>
+                {% endfor %}
+                {% if paginate.pages > 1 %}
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        {% include 'pagination-custom' %}
+                    </nav>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}

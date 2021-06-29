@@ -1,0 +1,12 @@
+<!--? Search model Begin -->
+<div class="search-model-box">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <form action="/search" method="get" class="search-model-form">
+            <div class="search-close-btn">+</div>
+            <input type="text" class="form-control" name="q" placeholder='{{ 'general.search.placeholder_icon' | t }}'
+                   onfocus="this.placeholder = ''"
+                   onblur="this.placeholder = '{{ 'general.search.placeholder_icon' | t }}'">
+            <span type="submit"></span>
+        </form>
+    </div>
+</div>

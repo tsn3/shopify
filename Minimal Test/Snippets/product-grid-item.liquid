@@ -1,0 +1,18 @@
+<form method="post" action="/cart/add">
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+    {% for image in product.images %}
+        <div class="popular-img">
+            <img src="{{ image.src | img_url: '600x600' }}" alt="{{ image.alt | escape }}">
+            <div class="img-cap">
+                <input type="submit" value="{{ 'products.product.add_to_cart' | t }}" class="btn" />
+            </div>
+            <div class="favorit-items">
+                <span class="flaticon-heart"></span>
+            </div>
+        </div>
+    {% endfor %}
+</form>
+<div class="popular-caption">
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <span>{{ product.price | money }}</span>
+</div>

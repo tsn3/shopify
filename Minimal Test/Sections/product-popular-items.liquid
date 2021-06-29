@@ -1,0 +1,137 @@
+{% assign featured = section.settings.featured_collection %}
+{% assign products_per_row = section.settings.num_per_row %}
+{% assign rows = section.settings.num_rows %}
+{% assign total_products = products_per_row | times: rows %}
+
+<div data-section-id="{{ section.id }}" data-section-type="featured-products-section">
+    <section class="popular-items latest-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-10">
+                    <div class="section-tittle mb-70 text-center">
+                        <h2>{{ section.settings.title }}</h2>
+                        <p>{{ section.settings.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
+                        {% for product in collections.all.products %}
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                <div class="single-popular-items mb-50 text-center">
+                                    {% include 'product-grid-item' %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="room-btn pt-70">
+                    <a href="{{ routes.all_products_collection_url }}" class="btn view-btn1">{{ 'blogs.article.view_all' | t }}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% schema %}
+{
+"name": {
+"en": "Product popular items"
+},
+"class": "index-section",
+"settings": [
+
+{
+"type": "text",
+"id": "title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Product popular items"
+}
+},
+{
+"id": "description",
+"type": "text",
+"label": "Description",
+"default": "Add description"
+},
+
+{
+"type": "collection",
+"id": "featured_collection",
+"label": {
+"en": "Collection"
+}
+},
+{
+"type": "range",
+"id": "num_per_row",
+"label": {
+"en": "Products per row"
+},
+"min": 3,
+"max": 5,
+"step": 1,
+"default": 3
+},
+{
+"type": "range",
+"id": "num_rows",
+"label": {
+"en": "Rows"
+},
+"min": 1,
+"max": 6,
+"step": 1,
+"default": 1
+},
+{
+"type": "checkbox",
+"id": "vendor_enable",
+"label": {
+"en": "Show product vendor"
+}
+},
+{
+"type": "checkbox",
+"id": "show_sale_circle",
+"label": {
+"en": "Show 'Sale' circle"
+}
+},
+{
+"type": "checkbox",
+"id": "show_sold_out_circle",
+"label": {
+"en": "Show 'Sold out' circle"
+}
+},
+{
+"type": "checkbox",
+"id": "center_grid_link",
+"label": {
+"en": "Center text below product images"
+}
+}
+],
+"presets": [
+{
+"name": {
+"en": "Product popular items"
+},
+"category": {
+"en": "Collection"
+},
+"settings": {
+"title": "Product popular items",
+"featured_collection": "frontpage"
+}
+}
+]
+}
+{% endschema %}
