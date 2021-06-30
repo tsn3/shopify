@@ -1,8 +1,34 @@
-<div class="form-horizontal">
-    <label for="SortBy">{{ 'collections.sorting.title' | t }}</label>
-    <select name="sort_by" id="SortBy" class="btn--tertiary" aria-describedby="a11y-refresh-page-message">
-        {% for option in collection.sort_options %}
-            <option value="{{ option.value }}"{% if sort_by == option.value %} selected="selected"{% endif %}>{{ option.name }}</option>
-        {% endfor %}
-    </select>
+<div class="properties__button">
+    <!--Nav Button  -->
+    <nav>
+        <div class="nav nav-tabs">
+            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'created-descending' }}">{{ 'collections.sorting.newest_arrivals' | t }}</a>
+            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'price-descending' }}">{{ 'collections.sorting.price_high_low' | t }}</a>
+            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'best-selling' }}">{{ 'collections.sorting.most_populer' | t }}</a>
+        </div>
+    </nav>
+    <!--End Nav Button  -->
 </div>
+
+
+<!--     <select class="custom-select" name="sort_by" onchange="javascript:location.href = window.location.href.split('?')[0] + `?sort_by=${this.value}`;">
+{% for option in collection.sort_options %}
+<option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+{% endfor %}
+</select> -->
+
+<!--
+<div class="properties__button">
+  <nav>
+    <div class="nav nav-tabs">
+
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+      {% for option in collection.sort_options %}
+      <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: option.value }}">
+        {{ option.name }}
+      </a>
+      {% endfor %}
+    </div>
+  </nav>
+</div> -->

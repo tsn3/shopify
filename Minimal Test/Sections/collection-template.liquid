@@ -1,53 +1,110 @@
-{% paginate collection.products by 6 %}
+{%- assign limit = 6 -%}
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last | replace:'\/','/' | replace:'%20',' ' | replace:'\u0026','&' -%}
+{%- for i in (1..1) -%}
+    {%- unless pageUrl contains "?" -%}{% break %}{%- endunless -%}
+    {%- if pageUrl contains "view=3" -%}{%- assign limit = 3 -%}{%- endif -%}
+    {%- if pageUrl contains "view=6" -%}{%- assign limit = 6 -%}{%- endif -%}
+    {%- if pageUrl contains "view=9" -%}{%- assign limit = 9 -%}{%- endif -%}
+    {%- if pageUrl contains "view=11" -%}{%- assign limit = 11 -%}{%- endif -%}
+{%- endfor -%}
+{% paginate collection.products by limit %}
     <div id="CollectionSection" data-section-id="{{ section.id }}" data-section-type="collection-template" data-sort-enabled="{{ section.settings.sort_enable }}">
 
         <!-- Latest Products Start -->
         <section class="popular-items latest-padding">
             <div class="container">
-                {% if section.settings.sort_enable %}
-                    <div class="row product-btn justify-content-between mb-40">
-                        {% if section.settings.sort_enable %}
-                            <div class="form-horizontal">
-                                <select name="sort_by" id="SortBy" class="btn--tertiary" aria-describedby="a11y-refresh-page-message">
-                                    {% for option in collection.sort_options %}
-                                        <option value="{{ option.value }}"{% if sort_by == option.value %} selected="selected"{% endif %}>{{ option.name }}</option>
-                                    {% endfor %}
+                <div class="row product-btn justify-content-between mb-40">
+                    {% if section.settings.sort_enable %}
+                        {% include 'collection-sorting' %}
+                    {% endif %}
+
+                    <!-- Grid and List view -->
+                    <div class="grid-list-view">
+                    </div>
+                    <!-- Select items -->
+
+
+                    <!--         <div class="select-this">
+          <form action="#">
+            <div class="select-itms">
+              <select name="select" id="select1">
+                <option value="">40 {{ 'collections.sorting.per_page' | t }}</option>
+                <option value="">50 {{ 'collections.sorting.per_page' | t }}</option>
+                <option value="">60 {{ 'collections.sorting.per_page' | t }}</option>
+                <option value="">70 {{ 'collections.sorting.per_page' | t }}</option>
+              </select>
+            </div>
+          </form>
+        </div> -->
+
+                    <!--         <div class="select-this">
+          <form action="#">
+            <div class="select-itms">
+              {% assign step = 2 %}
+              <select name="paginateBy" id="paginateBy" class="collection-sort__input">
+                {% for i in (5..15) %}
+                {% assign modulo = i | modulo: step %}
+                {% unless modulo == 0 %}{% continue %}{% endunless %}
+                {% assign v = i | append: '' %}
+                <option value="{{ v }}"
+                        {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+                        {% if cart.attributes.pagination == v %}
+                        selected
+                        {% endif %}
+                        {% else %}
+                        {% if i == 5 %} selected{% endif %}
+                        {% endif %}>
+                  {{ i }} {{ 'collections.sorting.per_page' | t }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </form>
+        </div>
+      </div> -->
+                    <div class="select-this">
+                        <form action="#">
+                            <div class="select-itms">
+                                <select id="sel1" class="num">
+                                    <option value="/collections/{{ collection.handle }}?view=3" {% if limit == 3 %}selected="selected"{% endif %}>3 {{ 'collections.sorting.per_page' | t }}</option>
+                                    <option value="/collections/{{ collection.handle }}?view=6" {% if limit == 6 %}selected="selected"{% endif %}>6 {{ 'collections.sorting.per_page' | t }}</option>
+                                    <option value="/collections/{{ collection.handle }}?view=9" {% if limit == 9 %}selected="selected"{% endif %}>9 {{ 'collections.sorting.per_page' | t }}</option>
+                                    <option value="/collections/{{ collection.handle }}?view=11" {% if limit == 11 %}selected="selected"{% endif %}>10 {{ 'collections.sorting.per_page' | t }}</option>
                                 </select>
                             </div>
-                        {% endif %}
-                        <div class="properties__button">
-                            <!--Nav Button  -->
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{{ 'collections.sorting.newest_arrivals' | t }}</a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">{{ 'collections.sorting.price_high_low' | t }}</a>
-                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">{{ 'collections.sorting.most_populer' | t }}</a>
-                                </div>
-                            </nav>
-                            <!--End Nav Button  -->
-                        </div>
-                        <!-- Grid and List view -->
-                        <div class="grid-list-view">
-                        </div>
-                        <!-- Select items -->
-
-                        <div class="select-this">
-
-
-                            <form action="#">
-                                <div class="select-itms">
-                                    <select name="select" id="select1">
-                                        <option value="">40 {{ 'collections.sorting.per_page' | t }}</option>
-                                        <option value="">50 {{ 'collections.sorting.per_page' | t }}</option>
-                                        <option value="">60 {{ 'collections.sorting.per_page' | t }}</option>
-                                        <option value="">70 {{ 'collections.sorting.per_page' | t }}</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
-                {% endif %}
+                </div>
 
+
+                <!--         Second Variant  -->
+                <!--         <div class="select-this">
+          <form action="#">
+            <div class="select-itms">
+              {% assign step = 2 %}
+              <select name="paginateBy" id="paginateBy" class="collection-sort__input">
+                {% for i in (5..15) %}
+                {% assign modulo = i | modulo: step %}
+                {% unless modulo == 0 %}{% continue %}{% endunless %}
+                {% assign v = i | append: '' %}
+                <option value="{{ v }}"
+                        {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+                        {% if cart.attributes.pagination == v %}
+                        selected
+                        {% endif %}
+                        {% else %}
+                        {% if i == 5 %} selected{% endif %}
+                        {% endif %}>
+                  {{ i }} {{ 'collections.sorting.per_page' | t }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+ -->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
