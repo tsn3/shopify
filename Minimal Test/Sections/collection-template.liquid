@@ -26,43 +26,30 @@
 
 
                     <!--         <div class="select-this">
-          <form action="#">
-            <div class="select-itms">
-              <select name="select" id="select1">
-                <option value="">40 {{ 'collections.sorting.per_page' | t }}</option>
-                <option value="">50 {{ 'collections.sorting.per_page' | t }}</option>
-                <option value="">60 {{ 'collections.sorting.per_page' | t }}</option>
-                <option value="">70 {{ 'collections.sorting.per_page' | t }}</option>
-              </select>
-            </div>
-          </form>
-        </div> -->
-
-                    <!--         <div class="select-this">
-          <form action="#">
-            <div class="select-itms">
-              {% assign step = 2 %}
-              <select name="paginateBy" id="paginateBy" class="collection-sort__input">
-                {% for i in (5..15) %}
-                {% assign modulo = i | modulo: step %}
-                {% unless modulo == 0 %}{% continue %}{% endunless %}
-                {% assign v = i | append: '' %}
-                <option value="{{ v }}"
-                        {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
-                        {% if cart.attributes.pagination == v %}
-                        selected
-                        {% endif %}
-                        {% else %}
-                        {% if i == 5 %} selected{% endif %}
-                        {% endif %}>
-                  {{ i }} {{ 'collections.sorting.per_page' | t }}
-                </option>
-                {% endfor %}
-              </select>
-            </div>
-          </form>
-        </div>
-      </div> -->
+<form action="#">
+<div class="select-itms">
+{% assign step = 2 %}
+<select name="paginateBy" id="paginateBy" class="collection-sort__input">
+{% for i in (5..15) %}
+{% assign modulo = i | modulo: step %}
+{% unless modulo == 0 %}{% continue %}{% endunless %}
+{% assign v = i | append: '' %}
+<option value="{{ v }}"
+{% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+{% if cart.attributes.pagination == v %}
+selected
+{% endif %}
+{% else %}
+{% if i == 5 %} selected{% endif %}
+{% endif %}>
+{{ i }} {{ 'collections.sorting.per_page' | t }}
+</option>
+{% endfor %}
+</select>
+</div>
+</form>
+</div>
+</div> -->
                     <div class="select-this">
                         <form action="#">
                             <div class="select-itms">
@@ -80,31 +67,31 @@
 
                 <!--         Second Variant  -->
                 <!--         <div class="select-this">
-          <form action="#">
-            <div class="select-itms">
-              {% assign step = 2 %}
-              <select name="paginateBy" id="paginateBy" class="collection-sort__input">
-                {% for i in (5..15) %}
-                {% assign modulo = i | modulo: step %}
-                {% unless modulo == 0 %}{% continue %}{% endunless %}
-                {% assign v = i | append: '' %}
-                <option value="{{ v }}"
-                        {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
-                        {% if cart.attributes.pagination == v %}
-                        selected
-                        {% endif %}
-                        {% else %}
-                        {% if i == 5 %} selected{% endif %}
-                        {% endif %}>
-                  {{ i }} {{ 'collections.sorting.per_page' | t }}
-                </option>
-                {% endfor %}
-              </select>
-            </div>
-          </form>
-        </div>
-      </div>
- -->
+<form action="#">
+<div class="select-itms">
+{% assign step = 2 %}
+<select name="paginateBy" id="paginateBy" class="collection-sort__input">
+{% for i in (5..15) %}
+{% assign modulo = i | modulo: step %}
+{% unless modulo == 0 %}{% continue %}{% endunless %}
+{% assign v = i | append: '' %}
+<option value="{{ v }}"
+{% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+{% if cart.attributes.pagination == v %}
+selected
+{% endif %}
+{% else %}
+{% if i == 5 %} selected{% endif %}
+{% endif %}>
+{{ i }} {{ 'collections.sorting.per_page' | t }}
+</option>
+{% endfor %}
+</select>
+</div>
+</form>
+</div>
+</div>
+-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
@@ -127,7 +114,9 @@
             </div>
         </section>
     </div>
+
 {% endpaginate %}
+
 
 
 

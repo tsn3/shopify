@@ -117,6 +117,7 @@
     "general": {
       "title": "Collections",
       "no_matches": "Sorry, there are no products in this collection",
+      "show_cats": "Show cats",
       "link_title": "Browse our {{ title }} collection"
     },
     "sorting": {

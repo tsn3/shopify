@@ -23,16 +23,19 @@
                             {% else %}
                                 <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
                             {% endif %}
-                            <div class="footer-tittle">
-                                <div class="footer-pera">
-                                    <p>{{ block.settings.text}}Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
+                            {% for block in section.blocks %}
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p>{{ block.settings.title_1}}</p>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
 
                 {% for block in section.blocks %}
+
                     {% case block.type %}
                         {% when 'menu' %}
                             <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
@@ -74,8 +77,6 @@
 {% include 'search-model' %}
 
 
-
-
 {% schema %}
 {
 "name": {
@@ -83,8 +84,11 @@
 },
 "max_blocks": 9,
 "settings": [
-
-
+{
+"id": "title_1",
+"type": "text",
+"label": "Name"
+},
 {
 "type": "checkbox",
 "id": "show_methods_of_payment",

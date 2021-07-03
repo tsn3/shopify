@@ -1,40 +1,94 @@
-<div class="watch-area section-padding30">
-    <div class="container">
-        <div class="row align-items-center justify-content-between padding-130">
-            <div class="col-lg-5 col-md-6">
-                <div class="watch-details mb-40">
-                    <h2>Watch of Choice</h2>
-                    <p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                    <a href="shop.html" class="btn">Show Watches</a>
+{%- if section.blocks.size > 0 -%}
+    <div class="watch-area section-padding30">
+        <div class="container">
+            {% for block in section.blocks %}
+                <div class="row align-items-center justify-content-between padding-130">
+                    <div class="col-lg-5 col-md-6">
+                        <div class="watch-details mb-40">
+                            <h2>{{ block.settings.title_1 }}</h2>
+                            <p>{{ block.settings.description_first }}</p>
+                            <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'collections.general.show_cats' | t }}</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                        <div class="choice-watch-img mb-40">
+                            <img src="{{ block.settings.image_1| img_url: '300x300'  }}" alt="{{ block.settings.image.alt }}">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-10">
-                <div class="choice-watch-img mb-40">
-                    <img src="assets/img/gallery/choce_watch1.png" alt="">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-lg-6 col-md-6 col-sm-10">
+                        <div class="choice-watch-img mb-40">
+                            <img src="{{ block.settings.image_2| img_url: '300x300'  }}" alt="{{ block.settings.image.alt }}">
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <div class="watch-details mb-40">
+                            <h2>{{ block.settings.title_2 }}</h2>
+                            <p>{{ block.settings.description_second }}</p>
+                            <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'collections.general.show_cats' | t }}</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row align-items-center justify-content-between">
-            <div class="col-lg-6 col-md-6 col-sm-10">
-                <div class="choice-watch-img mb-40">
-                    <img src="assets/img/gallery/choce_watch2.png" alt="">
-                </div>
-            </div>
-            <div class="col-lg-5 col-md-6">
-                <div class="watch-details mb-40">
-                    <h2>Watch of Choice</h2>
-                    <p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                    <a href="{{ routes.all_products_collection_url }}" class="btn">Show Watches</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
-</div>
+{%- endif -%}
 
 {% schema %}
 {
-"name": "Home watch area",
-"settings": [],
+"name": {
+"en": "Home watch area"
+},
+"class": "index-section",
+"max_blocks": 2,
+"blocks": [
+{
+"type": "image",
+"name": {
+"en": "Image"
+},
+"settings": [
+{
+"id": "title_1",
+"type": "text",
+"label": "Name"
+},
+{
+"id": "description_first",
+"type": "text",
+"label": "Description",
+"default": "Add description here"
+},
+
+{
+"type": "image_picker",
+"id": "image_1",
+"label": {
+"en": "Image 1"
+}
+},
+{
+"id": "title_2",
+"type": "text",
+"label": "Name"
+},
+{
+"id": "description_second",
+"type": "text",
+"label": "Description",
+"default": "Add description here"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": {
+"en": "Image 2"
+}
+}
+]
+}
+],
 "presets": [
 {
 "name": {
@@ -47,9 +101,3 @@
 ]
 }
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}

@@ -1,6 +1,6 @@
 // Slider of products
 $(document).ready(function(){
-    $('.slider-area .single-slider').slick({
+    $('.slider-area').slick({
     });
 });
 
@@ -40,7 +40,6 @@ $(document).ready(function(){
 // dataType: 'json'
 // });
 // });
-
 
 $(document).ready(function(){
     jQuery('.select-this .select-itms select.num').on('change', function(){

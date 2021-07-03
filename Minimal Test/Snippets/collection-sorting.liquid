@@ -2,13 +2,34 @@
     <!--Nav Button  -->
     <nav>
         <div class="nav nav-tabs">
-            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'created-descending' }}">{{ 'collections.sorting.newest_arrivals' | t }}</a>
-            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'price-descending' }}">{{ 'collections.sorting.price_high_low' | t }}</a>
-            <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'best-selling' }}">{{ 'collections.sorting.most_populer' | t }}</a>
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            <script>console.log({{ collection.sort_by | json }});</script>
+
+            <a class="nav-item nav-link {% if sort_by == "created-descending" %}active{% endif %}" href="{{ collection.url | sort_by: 'created-descending' }}">{{ 'collections.sorting.newest_arrivals' | t }}</a>
+            <a class="nav-item nav-link {% if sort_by == "price-descending" %}active{% endif %}" href="{{ collection.url | sort_by: 'price-descending' }}">{{ 'collections.sorting.price_high_low' | t }}</a>
+            <a class="nav-item nav-link {% if sort_by == "best-selling" %}active{% endif %}" href="{{ collection.url | sort_by: 'best-selling' }}">{{ 'collections.sorting.most_populer' | t }}</a>
+
         </div>
     </nav>
     <!--End Nav Button  -->
 </div>
+
+
+<!-- <div class="properties__button">
+  <!--Nav Button  -->
+<!--   <nav>
+    <div class="nav nav-tabs">
+
+      <a class="nav-item nav-link {% if option.value %}active{% endif %}" href="{{ collection.url | sort_by: 'created-descending' }}">{{ 'collections.sorting.newest_arrivals' | t }}</a>
+      <a class="nav-item nav-link {% if option.value %}active{% endif %}" href="{{ collection.url | sort_by: 'price-descending' }}">{{ 'collections.sorting.price_high_low' | t }}</a>
+      <a class="nav-item nav-link {% if option.value == sort_by %}active{% endif %}" href="{{ collection.url | sort_by: 'best-selling' }}">{{ 'collections.sorting.most_populer' | t }}</a>
+    </div>
+  </nav> -->
+<!--End Nav Button  -->
+<!-- </div>
+ -->
+
+
 
 
 <!--     <select class="custom-select" name="sort_by" onchange="javascript:location.href = window.location.href.split('?')[0] + `?sort_by=${this.value}`;">
